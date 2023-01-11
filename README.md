@@ -1,2 +1,2 @@
-# make-performace-chart
-Make a performace chart with Streamlit
+# make-performance-chart
+Make a performace chart with Streamlit for space missions
