@@ -254,7 +254,7 @@ div[class*="stNumberInput"] label {
             selected_colors.append(color)
             values = missions[ss]
             for i, pp in enumerate(properties):               
-                values[i] = st.number_input(pp, value=values[i], key=ss+pp, format="%.3f", help=helps[i])
+                values[i] = st.number_input(pp, value=values[i], key=ss+pp, format="%.3f", help=helps[i], step=values[i]/20)
 
     min_values = len(properties) * [1e10]
     max_values = len(properties) * [-1e10]
