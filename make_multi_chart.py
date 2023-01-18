@@ -199,16 +199,7 @@ if __name__ == '__main__':
         with col:
             log_scale[i] = st.checkbox(pp, log_scale[i], key='log_%d' % i)
 
-    min_values = len(properties) * [1e10]
-    max_values = len(properties) * [-1e10]
-    
-    for ss in selected_instruments:
-        values = missions[ss]
-        for i in range(len(properties)):
-            if values[i] < min_values[i]:
-                min_values[i] = values[i]
-            if values[i] > max_values[i]:
-                max_values[i] = values[i]
+
 
     st.write('Select the colors and adjust values')   
     selected_colors = []
@@ -226,6 +217,17 @@ if __name__ == '__main__':
             for i, pp in enumerate(properties):               
                 values[i] = st.number_input(pp, value=values[i], key=ss+pp, format="%.3f", help=helps[i])
 
+    min_values = len(properties) * [1e10]
+    max_values = len(properties) * [-1e10]
+    
+    for ss in selected_instruments:
+        values = missions[ss]
+        for i in range(len(properties)):
+            if values[i] < min_values[i]:
+                min_values[i] = values[i]
+            if values[i] > max_values[i]:
+                max_values[i] = values[i]
+
 
     my_fig = radar_chart(selected_instruments, selected_colors, min_values, max_values, fill_area)
 
@@ -238,7 +240,7 @@ if __name__ == '__main__':
         
           with open(fname, 'rb') as exfile:
              st.download_button(              #second button
-                label="download png file",
+                label="download file",
                 data=exfile,
                 file_name=fname,
                 mime='image/png',
