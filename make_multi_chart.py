@@ -9,9 +9,9 @@ properties = ['FOV', 'Sp. Resolution', 'En. Range', 'Location Accuracy', 'Duty C
 # min_values = [0.0, 0.15/6, 10.0, 1./3600., 0.0]
 log_scale=[False, False, True, True, False]
 invert_scale=[False, True, False, True, False]
-helps = ['In steradians', '$\Delta E / E$', 'max - min', 'in degrees', 'in percent']
+helps = ['In steradians', '$\Delta E / E$', 'max - min energy in keV', 'in degrees', 'in percent']
 
-instruments = ['INTEGRAL', 'NuSTAR', 'Fermi/GBM' , 'Swift/BAT' ]
+instruments = ['INTEGRAL', 'NuSTAR', 'Fermi' , 'Swift' ]
 colors = ['blue', 'red', 'yellow', 'green']
 
 default_colors = {}
@@ -25,6 +25,13 @@ missions={
   2000.-75.,
   (3./60.),
   85.]
+,
+'Fermi':[9.5,
+0.1,
+3e6-8.,
+0.5/60,
+60.]
+
 ,
 'Fermi/LAT':[2.4,
 0.1,
@@ -43,6 +50,13 @@ missions={
 75.,
 1.5/3600.,
 60.]
+,
+
+'Swift':[1.4,
+0.15/6.,
+150.,
+2./3600.,
+50.]
 ,
 
 'Swift/XRT':[(23.6/60.)**2,
@@ -172,7 +186,7 @@ def radar_chart(selected_instruments, selected_colors, min_values, max_values, f
                 alpha=0.6
                 )
 
-    plt.legend(loc='upper right')
+    plt.legend(loc='upper right', bbox_to_anchor=(1.0, 0.6, 0.2, 0.5))
 
     st.pyplot(fig)
 
@@ -182,7 +196,32 @@ def out(x):
     return "%.2f" % x
 
 if __name__ == '__main__':
+
+    tabs_font_css = """
+<style>
+div[class*="stTextArea"] label {
+  font-size: 26px;
+  color: gray;
+}
+
+div[class*="stTextInput"] label {
+  font-size: 26px;
+  color: black;
+}
+
+    input {
+        font-size: 0.75rem !important;
+    }
+
+div[class*="stNumberInput"] label {
+  font-size: 10px;
+  color: black;
+}
+</style>
+"""
+
     st.title("Make a chart for your instruments")
+    st.write(tabs_font_css, unsafe_allow_html=True)
 
     selected_instruments = st.multiselect('Select the instruments to display from the drop-down menu', missions.keys(), default=instruments)
     fill_area = st.checkbox("Check to fill the area", False)
